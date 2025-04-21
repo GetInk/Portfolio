@@ -338,6 +338,28 @@
             margin: 0;
         }
         
+        .featured-project {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .project-image-container {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .project-image-container img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-details {
+            flex: 1;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             nav ul {
@@ -352,6 +374,14 @@
             .profile {
                 flex-direction: column;
                 text-align: center;
+            }
+            
+            .featured-project {
+                flex-direction: column;
+            }
+            
+            .project-image-container {
+                max-width: 100%;
             }
             
             h1 {
@@ -446,71 +476,60 @@
     
     <section id="projects">
         <div class="container">
-            <h2>Projects</h2>
+            <h2>Featured Projects</h2>
             
-            <div class="ai-project">
-                <h3>AI-Powered Item Analysis Tool</h3>
-                <p>I developed an AI-driven assessment analysis system that evaluates question quality and provides recommendations for improvements. The system analyzes psychometric properties of test items and offers data visualization to help educators create more effective assessments.</p>
-                <div class="ai-stats">
-                    <div class="stat-card">
-                        <h4>Data Points Analyzed</h4>
-                        <p>5,000+</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Question Types</h4>
-                        <p>4</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Accuracy Rate</h4>
-                        <p>97%</p>
-                    </div>
+            <div class="featured-project">
+                <div class="project-image-container">
+                    <img src="/api/placeholder/600/400" alt="AI-Powered Item Analysis Tool">
                 </div>
-                <div class="skills" style="margin-top: 1rem;">
-                    <span class="skill-tag">AI Implementation</span>
-                    <span class="skill-tag">Data Analysis</span>
-                    <span class="skill-tag">Data Visualization</span>
-                    <span class="skill-tag">Educational Technology</span>
+                <div class="project-details">
+                    <h3>AI-Powered Item Analysis Tool</h3>
+                    <p>I developed an AI-driven assessment analysis system that evaluates question quality and provides recommendations for improvements. The system analyzes psychometric properties of test items and offers data visualization to help educators create more effective assessments.</p>
+                    <p>This tool uses machine learning algorithms to process test data, identify patterns in student responses, and generate actionable insights for instructors. The interface includes interactive visualizations that make complex data easily understandable.</p>
+                    <div class="ai-stats" style="margin-top: 1rem;">
+                        <div class="stat-card">
+                            <h4>Data Points Analyzed</h4>
+                            <p>5,000+</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Question Types</h4>
+                            <p>4</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Analysis Accuracy</h4>
+                            <p>97%</p>
+                        </div>
+                    </div>
+                    <div class="skills" style="margin-top: 1rem;">
+                        <span class="skill-tag">AI Implementation</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Data Visualization</span>
+                        <span class="skill-tag">Educational Technology</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="projects">
-                <div class="project-card">
-                    <img src="/api/placeholder/400/250" alt="LGU Website Design" class="project-image">
-                    <div class="project-info">
-                        <h3>LGU Website Redesign</h3>
-                        <p>A responsive website design project for a Local Government Unit in the Philippines, focusing on improving user experience and accessibility.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">UI/UX</span>
-                            <span class="project-tag">Figma</span>
-                            <span class="project-tag">Responsive Design</span>
-                        </div>
+            <div class="featured-project">
+                <div class="project-details">
+                    <h3>LGU Website Redesign</h3>
+                    <p>I led the redesign of a Local Government Unit's website in the Philippines, focusing on improving user experience, accessibility, and visual appeal. This project was completed during my tenure at Simplevia Technologies.</p>
+                    <p>The redesign included creating a responsive layout that works seamlessly across all devices, implementing user-friendly navigation systems, and integrating modern design elements while maintaining the LGU's branding guidelines.</p>
+                    <p>Key achievements:</p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>Designed an intuitive interface that improved citizen access to government services</li>
+                        <li>Created interactive prototypes using Figma that demonstrated the functionality of the website</li>
+                        <li>Implemented accessibility features to ensure the website could be used by all citizens</li>
+                        <li>Developed a mobile-responsive design that works on smartphones and tablets</li>
+                    </ul>
+                    <div class="skills">
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Responsive Web Design</span>
+                        <span class="skill-tag">Accessibility</span>
+                        <span class="skill-tag">Figma Prototyping</span>
                     </div>
                 </div>
-                
-                <div class="project-card">
-                    <img src="/api/placeholder/400/250" alt="E-commerce Platform" class="project-image">
-                    <div class="project-info">
-                        <h3>E-commerce Platform</h3>
-                        <p>A conceptual design for an e-commerce platform with integrated AI recommendations and inventory management system.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Web Design</span>
-                            <span class="project-tag">AI Integration</span>
-                            <span class="project-tag">User Experience</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="/api/placeholder/400/250" alt="QR Check-in System" class="project-image">
-                    <div class="project-info">
-                        <h3>QR Check-in System</h3>
-                        <p>Implementation of a QR-based check-in system for event management, similar to the one used at the Asian Age Group Aquatics Championships.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">QR Technology</span>
-                            <span class="project-tag">Event Management</span>
-                            <span class="project-tag">User Interface</span>
-                        </div>
-                    </div>
+                <div class="project-image-container">
+                    <img src="/api/placeholder/600/400" alt="LGU Website Redesign">
                 </div>
             </div>
         </div>
@@ -524,31 +543,14 @@
                 <div class="cert-card">
                     <img src="/api/placeholder/400/250" alt="Responsive Web Design Certification" class="cert-image">
                     <div class="cert-info">
-                        <h3>Responsive Web Design</h3>
-                        <p>freeCodeCamp</p>
+                        <h3>Responsive Web Design Developer Certification</h3>
+                        <p>Certified by Quincy Larson</p>
                         <p>Completed April 11, 2025</p>
-                        <p>300 hours of coursework</p>
+                        <p>300 hours of coursework on modern web design principles</p>
                     </div>
                 </div>
                 
-                <div class="cert-card">
-                    <img src="/api/placeholder/400/250" alt="Introduction to AI and Machine Learning" class="cert-image">
-                    <div class="cert-info">
-                        <h3>Introduction to AI and Machine Learning</h3>
-                        <p>Training by Alex Rivera</p>
-                        <p>Explored fundamentals of AI and ML applications in business contexts</p>
-                    </div>
                 </div>
-                
-                <div class="cert-card">
-                    <img src="/api/placeholder/400/250" alt="UI/UX Design Principles" class="cert-image">
-                    <div class="cert-info">
-                        <h3>UI/UX Design Principles</h3>
-                        <p>Course by John Tan</p>
-                        <p>Learned essential design principles and best practices for creating effective user interfaces</p>
-                    </div>
-                </div>
-            </div>
             
             <div style="margin-top: 2rem;">
                 <div class="card">
