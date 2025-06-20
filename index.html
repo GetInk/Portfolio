@@ -184,19 +184,29 @@
             flex: 1;
             min-width: 300px;
             position: relative;
+            display: flex;
+            justify-content: center;
         }
 
-        .profile-image img {
+        .profile-image .face-circle {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--neon-purple);
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.5);
+            position: relative;
+        }
+
+        .profile-image .face-circle img {
             width: 100%;
-            border-radius: 16px;
-            border: 1px solid var(--glossy-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
         }
 
-        .profile-image:hover img {
-            transform: scale(1.03);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        .profile-image:hover .face-circle img {
+            transform: scale(1.05);
         }
 
         .profile-info {
@@ -360,6 +370,126 @@
 
         .certificate-issuer {
             font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        /* Certificate Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            z-index: 1000;
+            overflow: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--glossy-black);
+            margin: 5% auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--glossy-border);
+            position: relative;
+            animation: modalOpen 0.5s ease;
+        }
+
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--light-gray);
+            cursor: pointer;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--pure-white);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+            height: 80vh;
+        }
+
+        .modal-cert-image {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .modal-cert-image img {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px solid var(--glossy-border);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-cert-details {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .modal-cert-details h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+            background: linear-gradient(90deg, var(--accent-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-cert-details h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: var(--pure-white);
+            border-bottom: 2px solid var(--neon-purple);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .modal-cert-details p {
+            margin-bottom: 15px;
+            color: var(--light-gray);
+            line-height: 1.7;
+        }
+
+        .modal-cert-details ul {
+            margin: 15px 0 20px 20px;
+        }
+
+        .modal-cert-details ul li {
+            margin-bottom: 10px;
             color: var(--light-gray);
         }
 
@@ -528,6 +658,15 @@
             .section-title {
                 font-size: 2rem;
             }
+            
+            .modal-body {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .modal-cert-image {
+                padding: 20px;
+            }
         }
 
         /* Animations */
@@ -549,6 +688,21 @@
     </style>
 </head>
 <body>
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-cert-image">
+                    <img id="modalImage" src="" alt="Certificate">
+                </div>
+                <div class="modal-cert-details" id="modalDetails">
+                    <!-- Details will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -578,7 +732,9 @@
             <div class="glossy-container">
                 <div class="profile">
                     <div class="profile-image">
-                        <img src="Me.png" alt="Brandon Quijana" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';">
+                        <div class="face-circle">
+                            <img src="Me.png" alt="Brandon Quijana" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';">
+                        </div>
                     </div>
                     <div class="profile-info">
                         <p>I am a motivated and adaptable professional with a background in Sales, Technical Support, Web Designing, and a growing interest in AI Implementation. As a fresh graduate in Computer Science from System Plus College Foundation, I bring a well-rounded skill set developed through hands-on on-the-job training and academic projects.</p>
@@ -650,7 +806,7 @@
         <section id="certificates" class="animate-on-scroll">
             <h2 class="section-title">Certificates</h2>
             <div class="certificates-grid">
-                <div class="certificate-card glossy-container">
+                <div class="certificate-card glossy-container" data-cert="networking">
                     <img src="Networking-1.png" alt="Networking Certificate">
                     <div class="certificate-overlay">
                         <h3 class="certificate-title">Networking Specialist</h3>
@@ -658,7 +814,7 @@
                     </div>
                 </div>
                 
-                <div class="certificate-card glossy-container">
+                <div class="certificate-card glossy-container" data-cert="databases">
                     <img src="Databases-1.png" alt="Databases Certificate">
                     <div class="certificate-overlay">
                         <h3 class="certificate-title">Database Specialist</h3>
@@ -666,7 +822,7 @@
                     </div>
                 </div>
                 
-                <div class="certificate-card glossy-container">
+                <div class="certificate-card glossy-container" data-cert="cybersecurity">
                     <img src="CybersecurityEssentials-1.png" alt="Cybersecurity Certificate">
                     <div class="certificate-overlay">
                         <h3 class="certificate-title">Cybersecurity Essentials</h3>
@@ -674,7 +830,7 @@
                     </div>
                 </div>
                 
-                <div class="certificate-card glossy-container">
+                <div class="certificate-card glossy-container" data-cert="javascript">
                     <img src="JavaScript Algorithms and Data Structures Certificate.png" alt="JavaScript Certificate">
                     <div class="certificate-overlay">
                         <h3 class="certificate-title">JavaScript Algorithms & Data Structures</h3>
@@ -682,7 +838,7 @@
                     </div>
                 </div>
                 
-                <div class="certificate-card glossy-container">
+                <div class="certificate-card glossy-container" data-cert="webdesign">
                     <img src="Responsive Web Design Certificate.png" alt="Responsive Web Design Certificate">
                     <div class="certificate-overlay">
                         <h3 class="certificate-title">Responsive Web Design</h3>
@@ -868,16 +1024,130 @@
             });
         });
 
-        // Certificate hover effect
-        const certificates = document.querySelectorAll('.certificate-card');
-        certificates.forEach(cert => {
-            cert.addEventListener('mouseenter', () => {
-                cert.style.transform = 'scale(1.03)';
+        // Certificate modal functionality
+        const modal = document.getElementById('certificateModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalDetails = document.getElementById('modalDetails');
+        const closeModal = document.getElementById('closeModal');
+        const certificateCards = document.querySelectorAll('.certificate-card');
+
+        // Certificate details
+        const certificateData = {
+            networking: {
+                title: "Networking Specialist",
+                issuer: "Pearson VUE",
+                date: "June 1, 2023",
+                description: "This certification validates the skills required for network configuration, troubleshooting, and maintenance. It demonstrates proficiency in networking concepts, protocols, and infrastructure management.",
+                skills: [
+                    "Network configuration and management",
+                    "Troubleshooting connectivity issues",
+                    "Understanding of networking protocols",
+                    "Network security implementation",
+                    "Infrastructure design principles"
+                ],
+                verification: "verify.certiport.com - ID: 6R5N-uTyz"
+            },
+            databases: {
+                title: "Database Specialist",
+                issuer: "Pearson VUE",
+                date: "December 16, 2022",
+                description: "This certification demonstrates expertise in database management systems, including design, implementation, and administration of databases.",
+                skills: [
+                    "Database design and architecture",
+                    "SQL query development",
+                    "Data management and security",
+                    "Database administration",
+                    "Performance optimization"
+                ],
+                verification: "verify.certiport.com - ID: s9kd-XM38"
+            },
+            cybersecurity: {
+                title: "Cybersecurity Essentials",
+                issuer: "Cisco Networking Academy",
+                date: "2023",
+                description: "This certification covers fundamental cybersecurity concepts including tactics used by cyber criminals, principles of confidentiality, integrity, and availability, and technologies used to protect digital assets.",
+                skills: [
+                    "Cyber threat analysis",
+                    "Security protocols implementation",
+                    "Data protection strategies",
+                    "Network defense mechanisms",
+                    "Cybersecurity laws and ethics"
+                ],
+                verification: "Cisco Networking Academy Verification System"
+            },
+            javascript: {
+                title: "JavaScript Algorithms and Data Structures",
+                issuer: "freeCodeCamp",
+                date: "April 24, 2025",
+                description: "This certification represents approximately 300 hours of coursework and demonstrates mastery of JavaScript fundamentals, algorithms, and data structures.",
+                skills: [
+                    "JavaScript programming fundamentals",
+                    "Algorithm implementation",
+                    "Data structure manipulation",
+                    "Problem-solving techniques",
+                    "Complex coding challenges"
+                ],
+                verification: "freecodecamp.org/certification/Calnr/javascript-algorithms-and-data-structures-v8"
+            },
+            webdesign: {
+                title: "Responsive Web Design",
+                issuer: "freeCodeCamp",
+                date: "April 11, 2025",
+                description: "This certification demonstrates proficiency in creating responsive web designs using HTML, CSS, Flexbox, Grid, and responsive design principles.",
+                skills: [
+                    "HTML5 semantic markup",
+                    "CSS3 styling and layout",
+                    "Flexbox and Grid systems",
+                    "Responsive design principles",
+                    "Accessibility best practices"
+                ],
+                verification: "freecodecamp.org/certification/Calnt/responsive-web-design"
+            }
+        };
+
+        // Open modal with certificate details
+        certificateCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const certType = card.getAttribute('data-cert');
+                const certData = certificateData[certType];
+                
+                // Set modal content
+                modalImage.src = card.querySelector('img').src;
+                
+                modalDetails.innerHTML = `
+                    <h2>${certData.title}</h2>
+                    <p><strong>Issued by:</strong> ${certData.issuer}</p>
+                    <p><strong>Date:</strong> ${certData.date}</p>
+                    
+                    <h3>Description</h3>
+                    <p>${certData.description}</p>
+                    
+                    <h3>Skills & Knowledge</h3>
+                    <ul>
+                        ${certData.skills.map(skill => `<li>${skill}</li>`).join('')}
+                    </ul>
+                    
+                    <h3>Verification</h3>
+                    <p>${certData.verification}</p>
+                `;
+                
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
             });
-            
-            cert.addEventListener('mouseleave', () => {
-                cert.style.transform = 'scale(1)';
-            });
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
         });
     </script>
 </body>
