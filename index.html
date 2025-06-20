@@ -268,6 +268,53 @@
             box-shadow: 0 8px 20px rgba(0, 195, 255, 0.5);
         }
 
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            color: var(--pure-white);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(157, 78, 221, 0.2);
+        }
+
+        /* Download Buttons */
+        .download-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glossy-border);
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(26, 26, 36, 0.6);
+            border: 1px solid var(--glossy-border);
+            border-radius: 8px;
+            color: var(--pure-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(74, 134, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .download-btn i {
+            font-size: 1.2rem;
+        }
+
         /* Experience Section */
         .experience-grid {
             display: grid;
@@ -667,6 +714,10 @@
             .modal-cert-image {
                 padding: 20px;
             }
+            
+            .download-buttons {
+                flex-direction: column;
+            }
         }
 
         /* Animations */
@@ -740,7 +791,18 @@
                         <p>I am a motivated and adaptable professional with a background in Sales, Technical Support, Web Designing, and a growing interest in AI Implementation. As a fresh graduate in Computer Science from System Plus College Foundation, I bring a well-rounded skill set developed through hands-on on-the-job training and academic projects.</p>
                         <p>In my previous roles, I've provided technical support during live events, assisted in sales and inventory operations, and contributed to UI/UX design projects using tools like Figma. I am also exploring the potential of AI-driven solutions to improve business processes and enhance customer experiences.</p>
                         <p>I'm a <span class="highlight">fast learner</span> with a strong commitment to learning and collaboration. I thrive in environments that provide training opportunities and aim to deliver practical, tech-driven results while continuously growing in a dynamic professional environment.</p>
-                        <a href="#contact" class="btn">Get In Touch</a>
+                        
+                        <div class="download-section">
+                            <h3>Download My Documents</h3>
+                            <div class="download-buttons">
+                                <a href="Resume (Original).pdf" download="Brandon_Quijana_Resume.pdf" class="download-btn">
+                                    <i class="fas fa-file-pdf"></i> Resume (Original).pdf
+                                </a>
+                                <a href="Cover Letter.pdf" download="Brandon_Quijana_Cover_Letter.pdf" class="download-btn">
+                                    <i class="fas fa-file-alt"></i> Cover Letter.pdf
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -933,6 +995,18 @@
                                 <p>Angeles City, Pampanga, Philippines</p>
                             </div>
                         </div>
+                        
+                        <div class="download-section">
+                            <h3 style="margin-bottom: 15px;">Download Documents</h3>
+                            <div class="download-buttons">
+                                <a href="Resume (Original).pdf" download="Brandon_Quijana_Resume.pdf" class="download-btn">
+                                    <i class="fas fa-file-pdf"></i> Download Resume
+                                </a>
+                                <a href="Cover Letter.pdf" download="Brandon_Quijana_Cover_Letter.pdf" class="download-btn">
+                                    <i class="fas fa-file-alt"></i> Download Cover Letter
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -1044,8 +1118,7 @@
                     "Understanding of networking protocols",
                     "Network security implementation",
                     "Infrastructure design principles"
-                ],
-                verification: "verify.certiport.com - ID: 6R5N-uTyz"
+                ]
             },
             databases: {
                 title: "Database Specialist",
@@ -1058,8 +1131,7 @@
                     "Data management and security",
                     "Database administration",
                     "Performance optimization"
-                ],
-                verification: "verify.certiport.com - ID: s9kd-XM38"
+                ]
             },
             cybersecurity: {
                 title: "Cybersecurity Essentials",
@@ -1072,8 +1144,7 @@
                     "Data protection strategies",
                     "Network defense mechanisms",
                     "Cybersecurity laws and ethics"
-                ],
-                verification: "Cisco Networking Academy Verification System"
+                ]
             },
             javascript: {
                 title: "JavaScript Algorithms and Data Structures",
@@ -1086,8 +1157,7 @@
                     "Data structure manipulation",
                     "Problem-solving techniques",
                     "Complex coding challenges"
-                ],
-                verification: "freecodecamp.org/certification/Calnr/javascript-algorithms-and-data-structures-v8"
+                ]
             },
             webdesign: {
                 title: "Responsive Web Design",
@@ -1100,8 +1170,7 @@
                     "Flexbox and Grid systems",
                     "Responsive design principles",
                     "Accessibility best practices"
-                ],
-                verification: "freecodecamp.org/certification/Calnt/responsive-web-design"
+                ]
             }
         };
 
@@ -1126,9 +1195,6 @@
                     <ul>
                         ${certData.skills.map(skill => `<li>${skill}</li>`).join('')}
                     </ul>
-                    
-                    <h3>Verification</h3>
-                    <p>${certData.verification}</p>
                 `;
                 
                 modal.style.display = "block";
